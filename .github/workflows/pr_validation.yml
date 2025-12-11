@@ -26,6 +26,7 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_CLIENT_ID: ${{ secrets.SP_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.SP_CLIENT_SECRET }}
+          BUNDLE_VAR_service_principal_id: ${{ secrets.SP_CLIENT_ID }}
         run: |
           databricks bundle validate --target prod
 
