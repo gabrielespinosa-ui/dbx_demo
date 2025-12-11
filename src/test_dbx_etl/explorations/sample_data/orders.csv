@@ -1,0 +1,3 @@
+order_id,customer_id,order_date,order_status
+O-1,C001,2023-10-01,Completed
+O-2,C002,2023-10-05,Processing
