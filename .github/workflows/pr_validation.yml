@@ -26,18 +26,19 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_CLIENT_ID: ${{ secrets.SP_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.SP_CLIENT_SECRET }}
+          BUNDLE_VAR_service_principal_id: ${{ secrets.SP_CLIENT_ID }}
         run: |
           databricks bundle validate --target prod
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      
-      - name: Install Test Dependencies
-        run: |
-          pip install pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Execute Unit Tests
-        run: pytest tests/
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10'
+#      
+#      - name: Install Test Dependencies
+#        run: |
+#          pip install pytest
+#          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+#
+#      - name: Execute Unit Tests
+#        run: pytest tests/

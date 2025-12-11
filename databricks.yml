@@ -20,8 +20,8 @@ variables:
   schema:
     description: The schema to use
   service_principal_id:
-    description: The Service Principal App ID to run jobs as
-
+    description: The service principal ID to run deployments as (prod only)
+    
 targets:
   dev:
     # The default target uses 'mode: development' to create a development copy.
