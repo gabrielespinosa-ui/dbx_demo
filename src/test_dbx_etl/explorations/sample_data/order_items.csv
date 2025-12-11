@@ -1,0 +1,5 @@
+item_id,order_id,product_id,quantity,item_status
+I-001,O-1,P100,1,Delivered
+I-002,O-1,P101,2,Delivered
+I-003,O-2,P102,2,Shipped
+I-004,O-2,P101,1,Pending
