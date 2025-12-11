@@ -34,4 +34,4 @@ jobs:
           DATABRICKS_CLIENT_SECRET: ${{ secrets.SP_CLIENT_SECRET }}
           BUNDLE_VAR_service_principal_id: ${{ secrets.SP_CLIENT_ID }}
         run: |
-          databricks bundle deploy --target prod
+          databricks bundle deploy --target prod 
