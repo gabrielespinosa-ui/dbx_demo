@@ -1,0 +1,49 @@
+name: "CI: Validate Bundle Integrity"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+jobs:
+  validate_and_test:
+    name: "Bundle Validation"
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Databricks CLI
+      # This action sets up the CLI and prepares it for authentication
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
+
+      # Step 3: Validate the Bundle Configuration
+      # This command checks for YAML errors and resource resolution issues.
+      # It does NOT deploy resources, making it safe for PRs.
+      - name: Validate Bundle Configuration
+        env:
+          # Inject secrets into the environment for the CLI to use
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_CLIENT_ID: ${{ secrets.SP_CLIENT_ID }}
+          DATABRICKS_CLIENT_SECRET: ${{ secrets.SP_CLIENT_SECRET }}
+        run: |
+          databricks bundle validate --target prod
+
+      # Step 4: Run Unit Tests (Optional but Recommended)
+      # If you have pytest logic in tests/, run it here.
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install Test Dependencies
+        run: |
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Execute Unit Tests
+        run: pytest tests/

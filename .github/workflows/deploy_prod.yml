@@ -1,0 +1,36 @@
+name: "CD: Deploy to Production"
+
+on:
+  push:
+    branches:
+      - main
+
+# Concurrency Group:
+# Ensures that if multiple pushes happen, we don't run concurrent deployments
+# which could lead to race conditions in infrastructure state.
+concurrency: 
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: "Deploy Infrastructure"
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
+
+      # The Deployment Step
+      # This uploads the artifacts and updates the job definitions
+      - name: Deploy to Production Target
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_CLIENT_ID: ${{ secrets.SP_CLIENT_ID }}
+          DATABRICKS_CLIENT_SECRET: ${{ secrets.SP_CLIENT_SECRET }}
+        run: |
+          databricks bundle deploy --target prod
