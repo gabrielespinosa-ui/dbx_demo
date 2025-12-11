@@ -19,8 +19,6 @@ variables:
     description: The catalog to use
   schema:
     description: The schema to use
-  service_principal_id:
-    description: The Service Principal App ID to run jobs as
 
 targets:
   dev:
