@@ -45,4 +45,4 @@ targets:
       catalog: dbx_test
       schema: prod
     run_as:
-      service_principal_name: ${var.service_principal_id}
+      service_principal_name:  ${var.service_principal_id}
