@@ -11,10 +11,6 @@ resources:
           interval: 1
           unit: DAYS
 
-      #email_notifications:
-      #  on_failure:
-      #    - your_email@example.com
-
       parameters:
         - name: catalog
           default: ${var.catalog}
@@ -42,13 +38,18 @@ resources:
             - task_key: notebook_task
           pipeline_task:
             pipeline_id: ${resources.pipelines.test_dbx_etl.id}
+        - task_key: check_results
+          depends_on:
+            - task_key: refresh_pipeline
+          sql_task:
+            warehouse_id: 72a4a71c246d8daa
+            file:
+              path: ./queries/audit_orders.sql
+
 
       environments:
         - environment_key: default
           spec:
             environment_version: "4"
             dependencies:
-              # By default we just include the .whl file generated for the test_dbx package.
-              # See https://docs.databricks.com/dev-tools/bundles/library-dependencies.html
-              # for more information on how to add other libraries.
               - ../dist/*.whl

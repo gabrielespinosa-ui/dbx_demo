@@ -1,3 +1,4 @@
-customer_id,name,email
-C001,Alice Smith,alice@example.com
-C002,Bob Jones,bob@example.com
+op,customer_id,name,email,updated_at
+i,C001,Alice Smith,alice@example.com,2024-02-19
+i,C002,Bob Jones,bob@example.com,2024-03-12
+u,C001,Alice Smith,alice2@example.com,2024-10-01
